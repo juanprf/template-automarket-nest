@@ -1,21 +1,53 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsInt, Min, IsPositive } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsArray } from 'class-validator';
 
 export class CreateCarDto {
-  @ApiProperty({ example: 'Toyota' })
   @IsString()
   make: string;
 
-  @ApiProperty({ example: 'Corolla' })
   @IsString()
   model: string;
 
-  @ApiProperty({ example: 2022 })
-  @IsInt()
-  @Min(1900)
+  @IsNumber()
   year: number;
 
-  @ApiProperty({ example: 15000 })
-  @IsPositive()
+  @IsNumber()
   price: number;
+
+  @IsOptional()
+  @IsNumber()
+  mileage?: number;
+
+  @IsOptional()
+  @IsString()
+  transmission?: string;
+
+  @IsOptional()
+  @IsString()
+  fuelType?: string;
+
+  @IsOptional()
+  @IsString()
+  bodyType?: string;
+
+  @IsOptional()
+  @IsString()
+  color?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsString()
+  status?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })  // Cada elemento del array debe ser string
+  images?: string[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  features?: string[];
 }

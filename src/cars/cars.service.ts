@@ -18,13 +18,14 @@ export class CarsService {
   async findOne(id: number): Promise<Car> {
     const car = await this.carsRepository.findOne({ where: { id } });
     if (!car) {
-      throw new NotFoundException(`Auto con ID ${id} no encontrado`);
+      throw new NotFoundException(`Car with ID ${id} not found`);
     }
     return car;
   }
 
-  async create(car: Car): Promise<Car> {
-    return this.carsRepository.save(car);   
+  async create(createCarDto: CreateCarDto): Promise<Car> {
+    const car = this.carsRepository.create(createCarDto);
+    return this.carsRepository.save(car);
   }
 
   async update(id: number, updateCarDto: Partial<CreateCarDto>): Promise<Car> {
@@ -36,7 +37,7 @@ export class CarsService {
   async remove(id: number): Promise<void> {
     const result = await this.carsRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`Auto con ID ${id} no encontrado`);
+      throw new NotFoundException(`Car with ID ${id} not found`);
     }
   }
 }
